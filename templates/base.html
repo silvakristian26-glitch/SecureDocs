@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}SecureDocs{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if usuario_nome %}
+<header class="topo">
+  <a class="marca" href="{{ url_for('dashboard') }}">SecureDocs</a>
+  <nav>
+    <a href="{{ url_for('dashboard') }}">Painel</a>
+    <a href="{{ url_for('clientes') }}">Clientes</a>
+    {% if perfil == 'admin' %}<a href="{{ url_for('auditoria') }}">Auditoria</a>{% endif %}
+  </nav>
+  <form method="post" action="{{ url_for('logout') }}" class="sair">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <span>{{ usuario_nome }} ({{ perfil }})</span>
+    <button type="submit" class="link">Sair</button>
+  </form>
+</header>
+{% endif %}
+<main class="conteudo">
+  {% with msgs = get_flashed_messages() %}
+    {% for m in msgs %}<p class="aviso" role="alert">{{ m }}</p>{% endfor %}
+  {% endwith %}
+  {% block conteudo %}{% endblock %}
+</main>
+</body>
+</html>

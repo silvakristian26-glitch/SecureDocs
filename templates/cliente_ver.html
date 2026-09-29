@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>{{ c.nome }}</h1>
+<p class="sub">Esta visualização foi registrada na auditoria.</p>
+<dl class="ficha">
+  <dt>CPF</dt><dd>{{ dados.cpf }}</dd>
+  <dt>E-mail</dt><dd>{{ dados.email or '—' }}</dd>
+  <dt>Telefone</dt><dd>{{ dados.telefone or '—' }}</dd>
+  <dt>Finalidade</dt><dd>{{ c.finalidade }}</dd>
+  <dt>Consentimento em</dt><dd>{{ c.data_consentimento.strftime('%d/%m/%Y %H:%M') }}</dd>
+</dl>
+<form method="post" action="{{ url_for('cliente_anonimizar', cid=c.id) }}"
+      onsubmit="return confirm('Anonimizar remove os dados pessoais de forma definitiva. Continuar?')">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button type="submit" class="perigo">Anonimizar titular</button>
+</form>
+{% endblock %}

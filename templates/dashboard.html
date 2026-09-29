@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Painel</h1>
+<dl class="numeros">
+  <div><dt>Clientes ativos</dt><dd>{{ ativos }}</dd></div>
+  <div><dt>Titulares anonimizados</dt><dd>{{ anonimizados }}</dd></div>
+  <div><dt>Eventos de auditoria hoje</dt><dd>{{ eventos_hoje }}</dd></div>
+</dl>
+<p><a class="botao" href="{{ url_for('cliente_novo') }}">Cadastrar cliente</a></p>
+{% endblock %}

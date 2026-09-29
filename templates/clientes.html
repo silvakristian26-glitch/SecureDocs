@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="cabecalho">
+  <h1>Clientes</h1>
+  <a class="botao" href="{{ url_for('cliente_novo') }}">Cadastrar cliente</a>
+</div>
+<form method="get" class="busca">
+  <label>Buscar por CPF <input name="cpf" value="{{ busca or '' }}" inputmode="numeric"></label>
+  <button type="submit">Buscar</button>
+  {% if busca %}<a href="{{ url_for('clientes') }}">Limpar</a>{% endif %}
+</form>
+<div class="tabela">
+<table>
+  <thead><tr><th>Nome</th><th>CPF</th><th>Finalidade</th><th>Cadastro</th><th></th></tr></thead>
+  <tbody>
+  {% for c in clientes %}
+    <tr class="{{ 'anonimo' if c.anonimizado_em }}">
+      <td>{{ c.nome }}</td>
+      <td class="cpf">{{ c.cpf_mascarado }}</td>
+      <td>{{ c.finalidade }}</td>
+      <td>{{ c.criado_em.strftime('%d/%m/%Y') }}</td>
+      <td>{% if perfil == 'admin' and not c.anonimizado_em %}
+        <a href="{{ url_for('cliente_ver', cid=c.id) }}">Ver dados</a>{% endif %}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5">Nenhum cliente encontrado. Cadastre o primeiro pelo botão acima.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

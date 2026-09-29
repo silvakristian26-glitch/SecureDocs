@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<h1>Cadastrar cliente</h1>
+<form method="post" class="formulario">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label>Nome completo <input name="nome" value="{{ form.get('nome', '') }}" required></label>
+  <label>CPF <input name="cpf" value="{{ form.get('cpf', '') }}" inputmode="numeric" required></label>
+  <label>E-mail <input type="email" name="email" value="{{ form.get('email', '') }}"></label>
+  <label>Telefone <input name="telefone" value="{{ form.get('telefone', '') }}" inputmode="tel"></label>
+  <label>Finalidade do tratamento
+    <input name="finalidade" value="{{ form.get('finalidade', '') }}" placeholder="Ex.: emissão de contrato" required>
+  </label>
+  <label class="check">
+    <input type="checkbox" name="consentimento" value="sim">
+    O titular autorizou o uso destes dados para a finalidade informada.
+  </label>
+  <button type="submit">Salvar cliente</button>
+</form>
+{% endblock %}
